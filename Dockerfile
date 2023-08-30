@@ -12,7 +12,7 @@ COPY scripts/ scripts/
 RUN chmod -R 777 .
 
 # Use the latest repos for R
-RUN R -e "options(repos = c(PPM = "https://packagemanager.posit.co/cran/latest"))"
+RUN R -e "options(repos = c(PPM = 'https://packagemanager.posit.co/cran/latest'))"
 # Install renv globally
 RUN R -e "install.packages('renv')"
 
@@ -24,8 +24,8 @@ USER daguser
 # Inititalise renv...
 RUN R -e "renv::init()"
 # ... and restore the R environment
-RUN R -e 'renv::install("paws", type = "binary")'
-RUN R -e 'renv::install("moj-analytical-services/Rdbtools")'
+RUN R -e 'renv::install('paws', type = 'binary')'
+RUN R -e 'renv::install('moj-analytical-services/Rdbtools')'
 
 # Run the DAG task
 ENTRYPOINT Rscript scripts/run.R
