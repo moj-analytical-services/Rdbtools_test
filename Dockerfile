@@ -28,5 +28,7 @@ RUN R -e "renv::install('paws', type = 'binary')"
 RUN R -e "renv::install('moj-analytical-services/Rdbtools')"
 RUN R -e "renv::snapshot()"
 
+RUN cat /etl/renv.lock
+
 # Run the DAG task
 ENTRYPOINT Rscript scripts/run.R
