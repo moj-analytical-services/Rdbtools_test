@@ -26,6 +26,7 @@ RUN R -e "renv::init()"
 # ... and restore the R environment
 RUN R -e "renv::install('paws', type = 'binary')"
 RUN R -e "renv::install('moj-analytical-services/Rdbtools')"
+RUN R -e "renv::snapshot()"
 
 # Run the DAG task
 ENTRYPOINT Rscript scripts/run.R
