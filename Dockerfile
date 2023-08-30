@@ -5,7 +5,7 @@ FROM ${DE_ECR}/r-airflow:4.1.2-2
 WORKDIR /etl
 
 # Add R package requirements and scripts
-#COPY renv.lock renv.lock
+COPY renv.lock renv.lock
 COPY scripts/ scripts/
 
 # Give working directory permissions to everyone
@@ -24,11 +24,7 @@ USER daguser
 # Inititalise renv...
 RUN R -e "renv::init()"
 # ... and restore the R environment
-RUN R -e "renv::install('paws', type = 'binary')"
-RUN R -e "renv::install('moj-analytical-services/Rdbtools')"
-RUN R -e "renv::snapshot()"
-
-RUN cat /etl/renv.lock
+RUN R -e "renv::restore()"
 
 # Run the DAG task
 ENTRYPOINT Rscript scripts/run.R
